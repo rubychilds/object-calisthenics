@@ -12,15 +12,9 @@ public class ATS extends Job
     super(title, employer);
   }
 
-  public boolean apply(Resume resume)
+  public boolean requiresResume()
   {
     return false;
-  }
-
-  @Override
-  public boolean apply()
-  {
-    return true;
   }
 
 }

@@ -1,11 +1,9 @@
 package job;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 import jobs.ATS;
 import jobs.Job;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import employer.Employer;

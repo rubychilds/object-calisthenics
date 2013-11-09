@@ -3,7 +3,6 @@ package employer;
 import java.util.ArrayList;
 
 import jobs.Job;
-import jobs.Jobs;
 import jobs.JobPoster;
 
 public class Employer

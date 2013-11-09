@@ -1,21 +1,20 @@
 package jobs;
 
-import resume.Resume;
 import employer.Employer;
 
-
-public abstract class Job {
+public abstract class Job
+{
 
   private JobTitle jobTitle;
   private Employer employer;
 
-  public Job(String title, 
-            Employer employer)
+  public Job(String title,
+             Employer employer)
   {
-    
-    if(employer == null)
+
+    if (employer == null)
       throw new NullPointerException();
-    
+
     this.jobTitle = new JobTitle(title);
     this.employer = employer;
   }
@@ -24,8 +23,7 @@ public abstract class Job {
   {
     return this.employer == employer;
   }
-  
-  public abstract boolean apply(Resume resume);
-  public abstract boolean apply();
-  
+
+  public abstract boolean requiresResume();
+
 }

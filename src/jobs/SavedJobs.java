@@ -1,13 +1,11 @@
 package jobs;
 
 import java.util.HashMap;
-import java.util.List;
 
 import jobseeker.Jobseeker;
 
 public class SavedJobs
-{
-  private List<JobseekerJob>       savedJobs;
+{ 
   private HashMap<Jobseeker, Jobs> savedJobseekerJobs;
 
   public SavedJobs()
@@ -18,15 +16,12 @@ public class SavedJobs
   public void saveJob(Jobseeker jobseeker,
                       Job job)
   {
-    if (savedJobseekerJobs.containsKey(jobseeker))
-    {
-      Jobs currentJobseekerJobs = savedJobseekerJobs.get(jobseeker);
-      currentJobseekerJobs.add(job);
-      savedJobseekerJobs.put(jobseeker, currentJobseekerJobs);
-      return;
-    }
 
-    Jobs currentJobseekerJobs = new Jobs();
+    Jobs currentJobseekerJobs = savedJobseekerJobs.get(jobseeker);
+
+    if (currentJobseekerJobs == null)
+      currentJobseekerJobs = new Jobs();
+
     currentJobseekerJobs.add(job);
     savedJobseekerJobs.put(jobseeker, currentJobseekerJobs);
   }
@@ -34,6 +29,5 @@ public class SavedJobs
   public Jobs jobsByEmployer(Jobseeker jobseeker)
   {
     return savedJobseekerJobs.get(jobseeker);
-
   }
 }

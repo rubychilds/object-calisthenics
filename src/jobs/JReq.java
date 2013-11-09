@@ -1,8 +1,6 @@
 package jobs;
 
 import employer.Employer;
-import resume.Resume;
-
 
 public class JReq extends Job{
 
@@ -10,14 +8,9 @@ public class JReq extends Job{
     super(title, employer);
   }
 
-  @Override
-  public boolean apply(Resume resume) {
+  public boolean requiresResume()
+  {
     return true;
-  }
-
-  @Override
-  public boolean apply() {
-    return false;
   }
 
 }

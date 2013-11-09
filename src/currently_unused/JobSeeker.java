@@ -1,7 +1,5 @@
 package currently_unused;
 
-import resume.Resume;
-
 public class JobSeeker
 {
 
