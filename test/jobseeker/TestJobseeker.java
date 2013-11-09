@@ -52,19 +52,6 @@ public class TestJobseeker
   }
 
   @Test
-  public void testJobseekerCanViewAPostedJob()
-  {
-    SavedJobs savedJobs = new SavedJobs();
-
-    assertTrue(savedJobs.jobsByEmployer(NAMED_JOBSEEKER).isEmpty());
-
-    NAMED_JOBSEEKER.saveJob(job, savedJobs);
-
-    assertTrue(savedJobs.jobsByEmployer(NAMED_JOBSEEKER).size() == 1);
-    assertTrue(savedJobs.jobsByEmployer(NAMED_JOBSEEKER).contains(job));
-  }
-
-  @Test
   public void testJobseekerCanApplyForAJob()
   {
     ApplicationProcess applicationProcess = spy(new ApplicationProcess());
@@ -72,6 +59,17 @@ public class TestJobseeker
     NAMED_JOBSEEKER.applyForJob(job, applicationProcess);
 
     verify(applicationProcess).apply(NAMED_JOBSEEKER, job);
+  }
+
+  @Test
+  public void testJobseekerCanViewAPostedJob()
+  {
+    SavedJobs savedJobs = new SavedJobs();
+
+    NAMED_JOBSEEKER.saveJob(job, savedJobs);
+
+    assertTrue(savedJobs.jobsByEmployer(NAMED_JOBSEEKER).size() == 1);
+    assertTrue(savedJobs.jobsByEmployer(NAMED_JOBSEEKER).contains(job));
   }
 
   @Test
@@ -84,6 +82,19 @@ public class TestJobseeker
     NAMED_JOBSEEKER.addResume(resume, resumeRepo);
 
     verify(resumeRepo).addResume(NAMED_JOBSEEKER, resume);
+  }
+
+  @Test
+  public void testJobseekerCanViewAnAddedResume()
+  {
+    ResumeRepository resumeRepo = new ResumeRepository();
+
+    Resume resume = new Resume("this is a resume");
+
+    NAMED_JOBSEEKER.addResume(resume, resumeRepo);
+
+    assertTrue(resumeRepo.resumesForJobseeker(NAMED_JOBSEEKER).size() == 1);
+    assertTrue(resumeRepo.resumesForJobseeker(NAMED_JOBSEEKER).contains(resume));
   }
 
   @Before
