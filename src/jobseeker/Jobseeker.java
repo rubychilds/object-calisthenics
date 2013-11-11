@@ -4,6 +4,8 @@ import resume.ActiveResumeRepo;
 import resume.Resume;
 import resume.ResumeRepository;
 import applications.ApplicationProcess;
+import applications.ApplicationRepository;
+import applications.Applications;
 import jobs.Job;
 import jobs.Jobs;
 import jobs.SavedJobs;
@@ -19,6 +21,7 @@ public class Jobseeker
     this.jobseekerName = new JobseekerName(name);
   }
 
+  // SAVE JOBS
   public void saveJob(Job job,
                       SavedJobs savedJobs)
   {
@@ -30,27 +33,35 @@ public class Jobseeker
     return savedJobs.jobsByEmployer(this);
   }
 
+  // RESUME
+  public void addResume(Resume resume,
+                        ResumeRepository resumeRepository)
+  {
+    resumeRepository.addResume(this, resume);
+  }
+
+  public void activateResume(Resume resume,
+                             ActiveResumeRepo activeResumeRepo)
+  {
+    activeResumeRepo.activateResume(this, resume);
+  }
+
+  public Resume viewActiveResume(ActiveResumeRepo activeResumeRepo)
+  {
+    return activeResumeRepo.viewActiveResume(this);
+  }
+
+  // APPLY
   public void applyForJob(Job job,
                           ApplicationProcess applicationProcess)
   {
     applicationProcess.apply(this, job);
   }
-  
-  public void addResume(Resume resume, ResumeRepository resumeRepository)
+
+  public Applications viewApplications(ApplicationRepository applicationRepo)
   {
-    resumeRepository.addResume(this, resume);
+    return applicationRepo.viewApplications(this);
   }
-  
-  public void activateResume(Resume resume, ActiveResumeRepo  activeResumeRepo)
-  {
-    activeResumeRepo.activateResume(this, resume);
-  }
-  
-  public Resume viewActiveResume(ActiveResumeRepo  activeResumeRepo)
-  {
-    return activeResumeRepo.viewActiveResume(this);
-  }
-  
 
   public String name()
   {

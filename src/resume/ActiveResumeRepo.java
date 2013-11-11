@@ -17,7 +17,6 @@ public class ActiveResumeRepo
   public void activateResume(Jobseeker jobseeker,
                              Resume resume)
   {
-    Resume resumeInRepo = activeResumes.get(jobseeker);
     activeResumes.put(jobseeker, resume);
   }
   

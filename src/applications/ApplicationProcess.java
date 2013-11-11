@@ -1,8 +1,5 @@
 package applications;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import resume.ActiveResumeRepo;
 import jobs.Job;
 import jobseeker.Jobseeker;
@@ -10,12 +7,12 @@ import jobseeker.Jobseeker;
 public class ApplicationProcess
 {
 
-  private List<Application> applications;
+  private ApplicationRepository applicationRepo;
   private ActiveResumeRepo  activeResumeRepo;
 
-  public ApplicationProcess(ActiveResumeRepo activeResumeRepo)
+  public ApplicationProcess(ActiveResumeRepo activeResumeRepo, ApplicationRepository applicationRepo)
   {
-    this.applications = new ArrayList<>();
+    this.applicationRepo = applicationRepo;
     this.activeResumeRepo = activeResumeRepo;
   }
 
@@ -24,7 +21,7 @@ public class ApplicationProcess
   {
 
     Application application = createApplication(jobseeker, job);
-    applications.add(application);
+    applicationRepo.addApplication(jobseeker, application);
   }
 
   private Application createApplication(Jobseeker jobseeker,

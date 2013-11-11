@@ -3,9 +3,9 @@ package jobseeker;
 import jobs.JReq;
 import jobs.Job;
 import jobs.SavedJobs;
-
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,6 +13,7 @@ import resume.ActiveResumeRepo;
 import resume.Resume;
 import resume.ResumeRepository;
 import applications.ApplicationProcess;
+import applications.ApplicationRepository;
 import employer.Employer;
 
 public class TestJobseeker
@@ -27,13 +28,13 @@ public class TestJobseeker
   @Test(expected = NullPointerException.class)
   public void testJobseekerWithNullName()
   {
-    Jobseeker jobseeker = new Jobseeker(null);
+    new Jobseeker(null);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testJobseekerWithNoStringName()
   {
-    Jobseeker jobseeker = new Jobseeker("");
+    new Jobseeker("");
   }
 
   @Test
@@ -51,17 +52,6 @@ public class TestJobseeker
     NAMED_JOBSEEKER.saveJob(job, savedJobs);
 
     verify(savedJobs).saveJob(NAMED_JOBSEEKER, job);
-  }
-
-  @Test
-  public void testJobseekerCanApplyForAJob()
-  {
-    ActiveResumeRepo activeResumeRepo = new ActiveResumeRepo();
-    ApplicationProcess applicationProcess = spy(new ApplicationProcess(activeResumeRepo));
-
-    NAMED_JOBSEEKER.applyForJob(job, applicationProcess);
-
-    verify(applicationProcess).apply(NAMED_JOBSEEKER, job);
   }
 
   @Test
@@ -125,7 +115,18 @@ public class TestJobseeker
     this.employer = new Employer("the Ladders");
     this.job = new JReq("dogWalker", this.employer);
     this.RESUME = new Resume("this is a resume");
+  }
 
+  @Test
+  public void testJobseekerCanApplyForAJob()
+  {
+    ActiveResumeRepo activeResumeRepo = new ActiveResumeRepo();
+    ApplicationRepository applicationRepo = new ApplicationRepository();
+    ApplicationProcess applicationProcess = spy(new ApplicationProcess(activeResumeRepo, applicationRepo));
+
+    NAMED_JOBSEEKER.applyForJob(job, applicationProcess);
+
+    verify(applicationProcess).apply(NAMED_JOBSEEKER, job);
   }
 
 }
