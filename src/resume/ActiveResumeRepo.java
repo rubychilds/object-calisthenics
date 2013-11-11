@@ -1,17 +1,29 @@
 package resume;
 
+import java.util.HashMap;
+
 import jobseeker.Jobseeker;
 
 public class ActiveResumeRepo
 {
+
+  private HashMap<Jobseeker, Resume> activeResumes;
+
   public ActiveResumeRepo()
   {
-    
+    this.activeResumes = new HashMap<>();
   }
 
-  public Resume resume(Jobseeker jobseeker)
+  public void activateResume(Jobseeker jobseeker,
+                             Resume resume)
   {
-    // TODO Auto-generated method stub
-    return null;
+    Resume resumeInRepo = activeResumes.get(jobseeker);
+    activeResumes.put(jobseeker, resume);
   }
+  
+  public Resume viewActiveResume(Jobseeker jobseeker)
+  {
+    return activeResumes.get(jobseeker);
+  }
+
 }

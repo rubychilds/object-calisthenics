@@ -1,5 +1,6 @@
 package jobseeker;
 
+import resume.ActiveResumeRepo;
 import resume.Resume;
 import resume.ResumeRepository;
 import applications.ApplicationProcess;
@@ -38,6 +39,16 @@ public class Jobseeker
   public void addResume(Resume resume, ResumeRepository resumeRepository)
   {
     resumeRepository.addResume(this, resume);
+  }
+  
+  public void activateResume(Resume resume, ActiveResumeRepo  activeResumeRepo)
+  {
+    activeResumeRepo.activateResume(this, resume);
+  }
+  
+  public Resume viewActiveResume(ActiveResumeRepo  activeResumeRepo)
+  {
+    return activeResumeRepo.viewActiveResume(this);
   }
   
 

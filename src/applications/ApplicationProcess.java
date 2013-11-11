@@ -11,7 +11,7 @@ public class ApplicationProcess
 {
 
   private List<Application> applications;
-  private ActiveResumeRepo activeResumeRepo;
+  private ActiveResumeRepo  activeResumeRepo;
 
   public ApplicationProcess(ActiveResumeRepo activeResumeRepo)
   {
@@ -26,18 +26,26 @@ public class ApplicationProcess
     Application application = createApplication(jobseeker, job);
     applications.add(application);
   }
-  
-  private Application createApplication(Jobseeker jobseeker, Job job)
+
+  private Application createApplication(Jobseeker jobseeker,
+                                        Job job)
   {
     if (job.requiresResume())
       return createApplicationWithResume(jobseeker, job);
 
+    return createApplicationWithoutResume(jobseeker, job);
+  }
+
+  private Application createApplicationWithResume(Jobseeker jobseeker,
+                                                  Job job)
+  {
+    return new Application(jobseeker, job, activeResumeRepo.viewActiveResume(jobseeker));
+  }
+
+  private Application createApplicationWithoutResume(Jobseeker jobseeker,
+                                                     Job job)
+  {
     return new Application(jobseeker, job);
   }
 
-  private Application createApplicationWithResume(Jobseeker jobseeker, Job job)
-  {
-    return new Application(jobseeker, job, activeResumeRepo.resume(jobseeker));
-  }
-  
 }

@@ -3,12 +3,13 @@ package jobseeker;
 import jobs.JReq;
 import jobs.Job;
 import jobs.SavedJobs;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
+import resume.ActiveResumeRepo;
 import resume.Resume;
 import resume.ResumeRepository;
 import applications.ApplicationProcess;
@@ -19,6 +20,7 @@ public class TestJobseeker
 
   private Jobseeker NAMED_JOBSEEKER;
   private String    NAME_OF_JOBSEEKER;
+  private Resume    RESUME;
   private Employer  employer;
   private Job       job;
 
@@ -54,7 +56,8 @@ public class TestJobseeker
   @Test
   public void testJobseekerCanApplyForAJob()
   {
-    ApplicationProcess applicationProcess = spy(new ApplicationProcess());
+    ActiveResumeRepo activeResumeRepo = new ActiveResumeRepo();
+    ApplicationProcess applicationProcess = spy(new ApplicationProcess(activeResumeRepo));
 
     NAMED_JOBSEEKER.applyForJob(job, applicationProcess);
 
@@ -62,7 +65,7 @@ public class TestJobseeker
   }
 
   @Test
-  public void testJobseekerCanViewAPostedJob()
+  public void testJobseekerCanViewASavedJob()
   {
     SavedJobs savedJobs = new SavedJobs();
 
@@ -77,11 +80,29 @@ public class TestJobseeker
   {
     ResumeRepository resumeRepo = spy(new ResumeRepository());
 
-    Resume resume = new Resume("this is a resume");
+    NAMED_JOBSEEKER.addResume(RESUME, resumeRepo);
 
-    NAMED_JOBSEEKER.addResume(resume, resumeRepo);
+    verify(resumeRepo).addResume(NAMED_JOBSEEKER, RESUME);
+  }
 
-    verify(resumeRepo).addResume(NAMED_JOBSEEKER, resume);
+  @Test
+  public void testJobseekerCanActivateResume()
+  {
+    ActiveResumeRepo resumeRepo = spy(new ActiveResumeRepo());
+
+    NAMED_JOBSEEKER.activateResume(RESUME, resumeRepo);
+
+    verify(resumeRepo).activateResume(NAMED_JOBSEEKER, RESUME);
+  }
+
+  @Test
+  public void testJobseekerCanViewActiveResume()
+  {
+    ActiveResumeRepo resumeRepo = spy(new ActiveResumeRepo());
+
+    NAMED_JOBSEEKER.activateResume(RESUME, resumeRepo);
+
+    assertTrue(NAMED_JOBSEEKER.viewActiveResume(resumeRepo) == RESUME);
   }
 
   @Test
@@ -89,22 +110,21 @@ public class TestJobseeker
   {
     ResumeRepository resumeRepo = new ResumeRepository();
 
-    Resume resume = new Resume("this is a resume");
-
-    NAMED_JOBSEEKER.addResume(resume, resumeRepo);
+    NAMED_JOBSEEKER.addResume(RESUME, resumeRepo);
 
     assertTrue(resumeRepo.resumesForJobseeker(NAMED_JOBSEEKER).size() == 1);
-    assertTrue(resumeRepo.resumesForJobseeker(NAMED_JOBSEEKER).contains(resume));
+    assertTrue(resumeRepo.resumesForJobseeker(NAMED_JOBSEEKER).contains(RESUME));
   }
 
   @Before
   public void Setup()
   {
-    NAME_OF_JOBSEEKER = "Ruby";
-    NAMED_JOBSEEKER = new Jobseeker(NAME_OF_JOBSEEKER);
+    this.NAME_OF_JOBSEEKER = "Ruby";
+    this.NAMED_JOBSEEKER = new Jobseeker(NAME_OF_JOBSEEKER);
 
     this.employer = new Employer("the Ladders");
-    this.job = new JReq("dogWalker", employer);
+    this.job = new JReq("dogWalker", this.employer);
+    this.RESUME = new Resume("this is a resume");
 
   }
 
