@@ -1,5 +1,8 @@
 package jobseeker;
 
+import java.util.List;
+
+import jobs.ATS;
 import jobs.JReq;
 import jobs.Job;
 import jobs.SavedJobs;
@@ -12,6 +15,7 @@ import org.junit.Test;
 import resume.ActiveResumeRepo;
 import resume.Resume;
 import resume.ResumeRepository;
+import applications.Application;
 import applications.ApplicationProcess;
 import applications.ApplicationRepository;
 import employer.Employer;
@@ -19,11 +23,15 @@ import employer.Employer;
 public class TestJobseeker
 {
 
-  private Jobseeker NAMED_JOBSEEKER;
-  private String    NAME_OF_JOBSEEKER;
-  private Resume    RESUME;
-  private Employer  employer;
-  private Job       job;
+  private Jobseeker             NAMED_JOBSEEKER;
+  private String                NAME_OF_JOBSEEKER;
+  private Resume                RESUME;
+  private Employer              employer;
+  private Job                   job;
+
+  private ActiveResumeRepo      activeResumeRepo;
+  private ApplicationRepository applicationRepo;
+  private ApplicationProcess    applicationProcess;
 
   @Test(expected = NullPointerException.class)
   public void testJobseekerWithNullName()
@@ -106,6 +114,58 @@ public class TestJobseeker
     assertTrue(resumeRepo.resumesForJobseeker(NAMED_JOBSEEKER).contains(RESUME));
   }
 
+  @Test
+  public void testJobseekerCanApplyForATSJobWithoutCV()
+  {
+    setupApplicationSystem();
+
+    this.job = new ATS("dogWalker", this.employer);
+
+    Application application = NAMED_JOBSEEKER.applyForJob(job, applicationProcess);
+
+    List<Application> applications = NAMED_JOBSEEKER.viewApplications(applicationRepo);
+
+    assertTrue(applications.contains(application));
+  }
+
+  @Test
+  public void testJobseekerCanApplyForAJReqJobWithCV()
+  {
+    setupApplicationSystem();
+
+    this.job = new JReq("dogWalker", this.employer);
+
+    NAMED_JOBSEEKER.activateResume(RESUME, activeResumeRepo);
+
+    Application application = NAMED_JOBSEEKER.applyForJob(job, applicationProcess);
+
+    List<Application> applications = NAMED_JOBSEEKER.viewApplications(applicationRepo);
+
+    assertTrue(applications.contains(application));
+  }
+
+  @Test
+  public void testJobseekerCannotApplyForAJReqJobWithoutCV()
+  {
+    setupApplicationSystem();
+
+    this.job = new JReq("dogWalker", this.employer);
+
+    Application application = NAMED_JOBSEEKER.applyForJob(job, applicationProcess);
+
+    List<Application> applications = NAMED_JOBSEEKER.viewApplications(applicationRepo);
+
+    assertTrue(applications.isEmpty());
+    assertTrue(!applications.contains(application));
+  }
+
+  private void setupApplicationSystem()
+  {
+    this.activeResumeRepo = new ActiveResumeRepo();
+    this.applicationRepo = new ApplicationRepository();
+    this.applicationProcess = spy(new ApplicationProcess(activeResumeRepo, applicationRepo));
+  }
+
   @Before
   public void Setup()
   {
@@ -115,18 +175,6 @@ public class TestJobseeker
     this.employer = new Employer("the Ladders");
     this.job = new JReq("dogWalker", this.employer);
     this.RESUME = new Resume("this is a resume");
-  }
-
-  @Test
-  public void testJobseekerCanApplyForAJob()
-  {
-    ActiveResumeRepo activeResumeRepo = new ActiveResumeRepo();
-    ApplicationRepository applicationRepo = new ApplicationRepository();
-    ApplicationProcess applicationProcess = spy(new ApplicationProcess(activeResumeRepo, applicationRepo));
-
-    NAMED_JOBSEEKER.applyForJob(job, applicationProcess);
-
-    verify(applicationProcess).apply(NAMED_JOBSEEKER, job);
   }
 
 }
