@@ -5,7 +5,7 @@ import java.util.List;
 import resume.ActiveResumeRepo;
 import resume.Resume;
 import resume.ResumeRepository;
-import applications.ApplicationProcess;
+import applications.ApplicationManager;
 import applications.ApplicationRepository;
 import applications.Application;
 import jobs.Job;
@@ -55,14 +55,14 @@ public class Jobseeker
 
   // APPLY
   public Application applyForJob(Job job,
-                                 ApplicationProcess applicationProcess)
+                                 ApplicationManager applicationManager)
   {
-    return applicationProcess.apply(this, job);
+    return applicationManager.apply(this, job);
   }
 
-  public List<Application> viewApplications(ApplicationRepository applicationRepo)
+  public List<Application> viewApplications(ApplicationManager applicationManager)
   {
-    return applicationRepo.viewApplicationsByJobseeker(this);
+    return applicationManager.viewApplicationsByJobseeker(this);
   }
 
   public String name()

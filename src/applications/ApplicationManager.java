@@ -1,5 +1,6 @@
 package applications;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,19 +30,38 @@ public class ApplicationManager
     return applicationRepository.viewApplicationsByJobseeker(jobseeker);
   }
 
-  public List<Application> viewApplicationsByJob(Job job)
+  public List<Jobseeker> viewApplicantsForJob(Job job)
   {
-    return applicationRepository.viewApplicationsForJob(job);
+
+    List<Application> applicationsForJob = applicationRepository.viewApplicationsForJob(job);
+    List<Jobseeker> applicantsForJob = new ArrayList();
+
+    for (Application application : applicationsForJob)
+      applicantsForJob.add(application.applicant());
+
+    return applicantsForJob;
   }
 
-  public List<Application> viewApplicationsOnDate(Date date)
+  public List<Jobseeker> viewApplicantsOnDateForJob(Date date,
+                                                    Job job)
   {
-    return applicationRepository.viewApplicationsOnDate(date);
+    List<Application> applicationsForJob = applicationRepository.viewApplicationsForJob(job);
+
+    List<Jobseeker> applicantsOnDateForJob = new ArrayList();
+
+    for (Application application : applicationsForJob)
+      addApplicantForJobIfApplicationOnDate(date, application, applicantsOnDateForJob);
+
+    return applicantsOnDateForJob;
   }
-  
-  public List<Application> viewApplicationsForJobOnDate(Job job, Date date)
+
+  private List<Jobseeker> addApplicantForJobIfApplicationOnDate(Date date,
+                                                                Application application,
+                                                                List<Jobseeker> applicantsOnDateForJob)
   {
-    return applicationRepository.viewApplicationsForJobOnDate(job, date);
+    if (application.isApplicationOnDate(date))
+      applicantsOnDateForJob.add(application.applicant());
+    return applicantsOnDateForJob;
   }
 
 }

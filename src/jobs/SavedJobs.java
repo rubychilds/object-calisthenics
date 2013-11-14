@@ -5,7 +5,7 @@ import java.util.HashMap;
 import jobseeker.Jobseeker;
 
 public class SavedJobs
-{ 
+{
   private HashMap<Jobseeker, Jobs> savedJobseekerJobs;
 
   public SavedJobs()

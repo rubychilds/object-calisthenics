@@ -2,9 +2,12 @@ package jobs;
 
 import employer.Employer;
 
-public class JReq extends Job{
+public class JReq extends Job
+{
 
-  public JReq(String title, Employer employer) {
+  public JReq(String title,
+              Employer employer)
+  {
     super(title, employer);
   }
 

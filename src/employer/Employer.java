@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import applications.Application;
-import applications.ApplicationRepository;
+import applications.ApplicationManager;
 import jobs.Job;
-import jobs.JobPoster;
+import jobs.JobManager;
+import jobseeker.Jobseeker;
 
 public class Employer
 {
@@ -19,33 +19,52 @@ public class Employer
   }
 
   public void postJob(Job job,
-                      JobPoster jobPoster)
+                      JobManager jobManager)
   {
-    jobPoster.postAJob(job);
+    jobManager.postAJob(job);
   }
 
-  public ArrayList<Job> viewPostsByMe(JobPoster jobPoster)
+  public List<Job> viewPostsByMe(JobManager jobManager)
   {
-    return jobPoster.viewPostsByARecruiter(this);
+    return jobManager.viewPostsByARecruiter(this);
   }
 
-  public List<Application> viewApplicationsForJob(Job job,
-                                                  ApplicationRepository applicationRepo)
+  public List<Jobseeker> viewApplicantsForJob(Job job,
+                                              ApplicationManager applicationManager)
   {
-    return applicationRepo.viewApplicationsForJob(job);
+    return applicationManager.viewApplicantsForJob(job);
   }
 
-  public List<Application> viewApplicationsOnDate(Date date,
-                                                  ApplicationRepository applicationRepo)
+  public List<Jobseeker> viewApplicantsOnDateForJob(Date date,
+                                                    Job job,
+                                                    ApplicationManager applicationManager)
   {
-    return applicationRepo.viewApplicationsOnDate(date);
+    return applicationManager.viewApplicantsOnDateForJob(date, job);
   }
 
-  public List<Application> viewApplicationsOnDateForJob(Job job,
-                                                        Date date,
-                                                        ApplicationRepository applicationRepo)
+  public List<Jobseeker> viewApplicantsForMyJobs(JobManager jobManager,
+                                                 ApplicationManager applicationManager)
   {
-    return applicationRepo.viewApplicationsForJobOnDate(job, date);
+    List<Job> jobPosts = viewPostsByMe(jobManager);
+    List<Jobseeker> applicantsForMyJobPosts = new ArrayList();
+
+    for (Job job : jobPosts)
+      applicantsForMyJobPosts.addAll(applicationManager.viewApplicantsForJob(job));
+
+    return applicantsForMyJobPosts;
+  }
+
+  public List<Jobseeker> viewApplicantsOnDateForMyJobs(Date date,
+                                                       JobManager jobManager,
+                                                       ApplicationManager applicationManager)
+  {
+    List<Job> jobPosts = viewPostsByMe(jobManager);
+    List<Jobseeker> applicantsForMyJobPosts = new ArrayList();
+
+    for (Job job : jobPosts)
+      applicantsForMyJobPosts.addAll(applicationManager.viewApplicantsOnDateForJob(date, job));
+
+    return applicantsForMyJobPosts;
   }
 
 }

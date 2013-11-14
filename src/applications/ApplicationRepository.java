@@ -2,7 +2,6 @@ package applications;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import jobs.Job;
@@ -27,10 +26,17 @@ public class ApplicationRepository
   {
     List<Application> applicationsByJobseeker = new ArrayList();
     for (Application application : applications)
-    {
-      if (application.isApplicationByJobseeker(jobseeker))
-        applicationsByJobseeker.add(application);
-    }
+      addApplicationForJobseeker(jobseeker, application, applicationsByJobseeker);
+
+    return applicationsByJobseeker;
+  }
+
+  private List<Application> addApplicationForJobseeker(Jobseeker jobseeker,
+                                                      Application application,
+                                                      List<Application> applicationsByJobseeker)
+  {
+    if (application.isApplicationByJobseeker(jobseeker))
+      applicationsByJobseeker.add(application);
     return applicationsByJobseeker;
   }
 
@@ -38,36 +44,19 @@ public class ApplicationRepository
   {
     List<Application> applicationsForJob = new ArrayList();
     for (Application application : applications)
-    {
-      if (application.isApplicationForJob(job))
-        applicationsForJob.add(application);
-    }
+      addApplicationForJob(job, application, applicationsForJob);
+
     return applicationsForJob;
   }
 
-  public List<Application> viewApplicationsOnDate(Date date)
+  private List<Application> addApplicationForJob(Job job,
+                                                 Application application,
+                                                 List<Application> applicationsForJob)
   {
-    List<Application> applicationsOnDate = new ArrayList();
-    for (Application application : applications)
-    {
-      if (application.isApplicationOnDate(date))
-        applicationsOnDate.add(application);
-    }
-    return applicationsOnDate;
-  }
+    if (application.isApplicationForJob(job))
+      applicationsForJob.add(application);
 
-  public List<Application> viewApplicationsForJobOnDate(Job job,
-                                                        Date date)
-  {
-
-    List<Application> applicationsForJob = viewApplicationsForJob(job);
-    List<Application> applicationsForJobOnDate = new ArrayList<>();
-    for (Application application : applications)
-    {
-      if (application.isApplicationOnDate(date))
-        applicationsForJobOnDate.add(application);
-    }
-    return applicationsForJobOnDate;
+    return applicationsForJob;
   }
 
 }

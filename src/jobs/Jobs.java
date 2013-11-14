@@ -1,6 +1,7 @@
 package jobs;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import employer.Employer;
 
@@ -27,18 +28,22 @@ public class Jobs
     return jobs.contains(job);
   }
 
-  public ArrayList<Job> jobsByEmployer(Employer employer)
+  public List<Job> jobsByEmployer(Employer employer)
   {
-    if (employer == null)
-      throw new NullPointerException();
+    List<Job> jobsByEmployer = new ArrayList<Job>();
 
-    ArrayList<Job> jobsBy = new ArrayList<Job>();
+    for (Job job : jobs)
+      addJobIfByEmployer(job, employer, jobsByEmployer);
 
-    for (Job currentJob : jobs)
-    {
-      if (currentJob.checkEmployerPostedJob(employer))
-        jobsBy.add(currentJob);
-    }
+    return jobsByEmployer;
+  }
+
+  private List<Job> addJobIfByEmployer(Job job,
+                                       Employer employer,
+                                       List<Job> jobsBy)
+  {
+    if (job.checkEmployerPostedJob(employer))
+      jobsBy.add(job);
 
     return jobsBy;
   }

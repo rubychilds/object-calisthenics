@@ -16,6 +16,7 @@ import resume.ActiveResumeRepo;
 import resume.Resume;
 import resume.ResumeRepository;
 import applications.Application;
+import applications.ApplicationManager;
 import applications.ApplicationProcess;
 import applications.ApplicationRepository;
 import employer.Employer;
@@ -31,7 +32,7 @@ public class TestJobseeker
 
   private ActiveResumeRepo      activeResumeRepo;
   private ApplicationRepository applicationRepo;
-  private ApplicationProcess    applicationProcess;
+  private ApplicationManager applicationManager;
 
   @Test(expected = NullPointerException.class)
   public void testJobseekerWithNullName()
@@ -121,9 +122,9 @@ public class TestJobseeker
 
     this.job = new ATS("dogWalker", this.employer);
 
-    Application application = NAMED_JOBSEEKER.applyForJob(job, applicationProcess);
+    Application application = NAMED_JOBSEEKER.applyForJob(job, applicationManager);
 
-    List<Application> applications = NAMED_JOBSEEKER.viewApplications(applicationRepo);
+    List<Application> applications = NAMED_JOBSEEKER.viewApplications(applicationManager);
 
     assertTrue(applications.contains(application));
   }
@@ -137,9 +138,9 @@ public class TestJobseeker
 
     NAMED_JOBSEEKER.activateResume(RESUME, activeResumeRepo);
 
-    Application application = NAMED_JOBSEEKER.applyForJob(job, applicationProcess);
+    Application application = NAMED_JOBSEEKER.applyForJob(job, applicationManager);
 
-    List<Application> applications = NAMED_JOBSEEKER.viewApplications(applicationRepo);
+    List<Application> applications = NAMED_JOBSEEKER.viewApplications(applicationManager);
 
     assertTrue(applications.contains(application));
   }
@@ -151,9 +152,9 @@ public class TestJobseeker
 
     this.job = new JReq("dogWalker", this.employer);
 
-    Application application = NAMED_JOBSEEKER.applyForJob(job, applicationProcess);
+    Application application = NAMED_JOBSEEKER.applyForJob(job, applicationManager);
 
-    List<Application> applications = NAMED_JOBSEEKER.viewApplications(applicationRepo);
+    List<Application> applications = NAMED_JOBSEEKER.viewApplications(applicationManager);
 
     assertTrue(applications.isEmpty());
     assertTrue(!applications.contains(application));
@@ -162,8 +163,7 @@ public class TestJobseeker
   private void setupApplicationSystem()
   {
     this.activeResumeRepo = new ActiveResumeRepo();
-    this.applicationRepo = new ApplicationRepository();
-    this.applicationProcess = spy(new ApplicationProcess(activeResumeRepo, applicationRepo));
+    this.applicationManager = new ApplicationManager(activeResumeRepo);
   }
 
   @Before

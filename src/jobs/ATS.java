@@ -1,7 +1,6 @@
 package jobs;
 
 import employer.Employer;
-import resume.Resume;
 
 public class ATS extends Job
 {
