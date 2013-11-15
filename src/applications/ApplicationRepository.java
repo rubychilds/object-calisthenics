@@ -1,18 +1,17 @@
 package applications;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 import jobs.Job;
 import jobseeker.Jobseeker;
 
 public class ApplicationRepository
 {
-  private List<Application> applications;
+  private Applications applications;
 
   public ApplicationRepository()
   {
-    this.applications = new ArrayList<>();
+    this.applications = new Applications();
   }
 
   public void addApplication(Jobseeker jobseeker,
@@ -22,36 +21,43 @@ public class ApplicationRepository
       applications.add(application);
   }
 
-  public List<Application> viewApplicationsByJobseeker(Jobseeker jobseeker)
+  public Applications viewApplicationsByJobseeker(Jobseeker jobseeker)
   {
-    List<Application> applicationsByJobseeker = new ArrayList<Application>();
-    for (Application application : applications)
+    Applications applicationsByJobseeker = new Applications();
+    Iterator<Application> iter = applications.iterator();
+    while (iter.hasNext())
+    {
+      Application application = iter.next();
       addApplicationForJobseeker(jobseeker, application, applicationsByJobseeker);
-
+    }
     return applicationsByJobseeker;
   }
 
-  private List<Application> addApplicationForJobseeker(Jobseeker jobseeker,
-                                                       Application application,
-                                                       List<Application> applicationsByJobseeker)
+  private Applications addApplicationForJobseeker(Jobseeker jobseeker,
+                                                  Application application,
+                                                  Applications applicationsByJobseeker)
   {
     if (application.isApplicationByJobseeker(jobseeker))
       applicationsByJobseeker.add(application);
+    
     return applicationsByJobseeker;
   }
 
-  public List<Application> viewApplicationsForJob(Job job)
+  public Applications viewApplicationsForJob(Job job)
   {
-    List<Application> applicationsForJob = new ArrayList<Application>();
-    for (Application application : applications)
+    Applications applicationsForJob = new Applications();
+    Iterator<Application> iter = applications.iterator();
+    while (iter.hasNext())
+    {
+      Application application = iter.next();
       addApplicationForJob(job, application, applicationsForJob);
-
+    }
     return applicationsForJob;
   }
 
-  private List<Application> addApplicationForJob(Job job,
-                                                 Application application,
-                                                 List<Application> applicationsForJob)
+  private Applications addApplicationForJob(Job job,
+                                            Application application,
+                                            Applications applicationsForJob)
   {
     if (application.isApplicationForJob(job))
       applicationsForJob.add(application);

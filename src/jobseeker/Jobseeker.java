@@ -1,13 +1,12 @@
 package jobseeker;
 
-import java.util.List;
 
 import resume.ActiveResumeRepo;
 import resume.Resume;
 import resume.ResumeRepository;
 import applications.ApplicationManager;
-import applications.ApplicationRepository;
 import applications.Application;
+import applications.Applications;
 import jobs.Job;
 import jobs.Jobs;
 import jobs.SavedJobs;
@@ -60,7 +59,7 @@ public class Jobseeker
     return applicationManager.apply(this, job);
   }
 
-  public List<Application> viewApplications(ApplicationManager applicationManager)
+  public Applications viewApplications(ApplicationManager applicationManager)
   {
     return applicationManager.viewApplicationsByJobseeker(this);
   }

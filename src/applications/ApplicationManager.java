@@ -1,6 +1,7 @@
 package applications;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import jobs.Job;
@@ -24,7 +25,7 @@ public class ApplicationManager
     return applicationProcess.apply(jobseeker, job);
   }
 
-  public List<Application> viewApplicationsByJobseeker(Jobseeker jobseeker)
+  public Applications viewApplicationsByJobseeker(Jobseeker jobseeker)
   {
     return applicationRepository.viewApplicationsByJobseeker(jobseeker);
   }
@@ -32,11 +33,15 @@ public class ApplicationManager
   public List<Jobseeker> viewApplicantsForJob(Job job)
   {
 
-    List<Application> applicationsForJob = applicationRepository.viewApplicationsForJob(job);
+    Applications applicationsForJob = applicationRepository.viewApplicationsForJob(job);
     List<Jobseeker> applicantsForJob = new ArrayList<Jobseeker>();
 
-    for (Application application : applicationsForJob)
+    Iterator<Application> iter = applicationsForJob.iterator();
+    while (iter.hasNext())
+    {
+      Application application = iter.next();
       applicantsForJob.add(application.applicant());
+    }
 
     return applicantsForJob;
   }
@@ -44,13 +49,17 @@ public class ApplicationManager
   public List<Jobseeker> viewApplicantsOnDateForJob(Date date,
                                                     Job job)
   {
-    List<Application> applicationsForJob = applicationRepository.viewApplicationsForJob(job);
+    Applications applicationsForJob = applicationRepository.viewApplicationsForJob(job);
 
     List<Jobseeker> applicantsOnDateForJob = new ArrayList<Jobseeker>();
-
-    for (Application application : applicationsForJob)
+    
+    Iterator<Application> iter = applicationsForJob.iterator();
+    while (iter.hasNext())
+    {
+      Application application = iter.next();
       addApplicantForJobIfApplicationOnDate(date, application, applicantsOnDateForJob);
-
+    }
+    
     return applicantsOnDateForJob;
   }
 
