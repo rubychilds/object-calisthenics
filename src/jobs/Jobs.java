@@ -28,26 +28,6 @@ public class Jobs
     return jobs.contains(job);
   }
 
-  public List<Job> jobsByEmployer(Employer employer)
-  {
-    List<Job> jobsByEmployer = new ArrayList<Job>();
-
-    for (Job job : jobs)
-      addJobIfByEmployer(job, employer, jobsByEmployer);
-
-    return jobsByEmployer;
-  }
-
-  private List<Job> addJobIfByEmployer(Job job,
-                                       Employer employer,
-                                       List<Job> jobsBy)
-  {
-    if (job.checkEmployerPostedJob(employer))
-      jobsBy.add(job);
-
-    return jobsBy;
-  }
-
   public boolean isEmpty()
   {
     return jobs.size() == 0;

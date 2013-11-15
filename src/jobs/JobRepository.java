@@ -1,21 +1,37 @@
 package jobs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import employer.Employer;
 
 public class JobRepository
 {
-  private Jobs jobs;
+  private List<Job> jobs;
 
   public JobRepository()
   {
-    this.jobs = new Jobs();
+    this.jobs = new ArrayList<Job>();
   }
 
   public List<Job> jobsByEmployer(Employer employer)
   {
-    return jobs.jobsByEmployer(employer);
+    List<Job> jobsByEmployer = new ArrayList<Job>();
+
+    for (Job job : jobs)
+      addJobIfByEmployer(job, employer, jobsByEmployer);
+
+    return jobsByEmployer;
+  }
+  
+  private List<Job> addJobIfByEmployer(Job job,
+                                       Employer employer,
+                                       List<Job> jobsBy)
+  {
+    if (job.checkEmployerPostedJob(employer))
+      jobsBy.add(job);
+
+    return jobsBy;
   }
 
   public boolean contains(Job job)
