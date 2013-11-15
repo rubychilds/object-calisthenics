@@ -45,6 +45,7 @@ public class TestApplications
   public void testApplicationsIterator()
   {
     this.applications = new Applications();
+    setUpApplications();
 
     applications.add(application1);
     applications.add(application2);

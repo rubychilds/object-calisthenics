@@ -1,31 +1,31 @@
 package jobs;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
-import employer.Employer;
 
 public class Jobs
 {
 
-  private ArrayList<Job> jobs;
+  private List<Job> jobs;
 
   public Jobs()
   {
     this.jobs = new ArrayList<Job>();
   }
 
-  public boolean add(Job job)
+  public void add(Job job)
   {
     if (job == null)
       throw new NullPointerException();
 
-    return jobs.add(job);
+    if (!jobs.contains(job))
+      jobs.add(job);
   }
 
-  public boolean contains(Job job)
+  public Iterator<Job> iterator()
   {
-    return jobs.contains(job);
+    return jobs.iterator();
   }
 
   public boolean isEmpty()
@@ -33,8 +33,14 @@ public class Jobs
     return jobs.size() == 0;
   }
 
+  public boolean contains(Job job)
+  {
+    return jobs.contains(job);
+  }
+
   public int size()
   {
     return jobs.size();
   }
+
 }

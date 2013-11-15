@@ -15,7 +15,11 @@ public class Applications
 
   public void add(Application application)
   {
-    applications.add(application);
+    if (application == null)
+      throw new NullPointerException();
+
+    if (!applications.contains(application))
+      applications.add(application);
   }
 
   public Iterator<Application> iterator()
@@ -37,31 +41,4 @@ public class Applications
   {
     return applications.size();
   }
-
-  public Iterator<Application> applicationsIterator()
-  {
-    return new myIterator();
-  }
-
-  public class myIterator implements Iterator<Application>
-  {
-
-    Iterator<Application> iter = applications.iterator();
-
-    public boolean hasNext()
-    {
-      return iter.hasNext();
-    }
-
-    public Application next()
-    {
-      return iter.next();
-    }
-
-    public void remove()
-    {
-      iter.remove();
-    }
-  }
-
 }
