@@ -17,8 +17,6 @@ import resume.Resume;
 import resume.ResumeRepository;
 import applications.Application;
 import applications.ApplicationManager;
-import applications.ApplicationProcess;
-import applications.ApplicationRepository;
 import employer.Employer;
 
 public class TestJobseeker
@@ -31,7 +29,6 @@ public class TestJobseeker
   private Job                   job;
 
   private ActiveResumeRepo      activeResumeRepo;
-  private ApplicationRepository applicationRepo;
   private ApplicationManager applicationManager;
 
   @Test(expected = NullPointerException.class)

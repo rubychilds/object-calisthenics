@@ -59,7 +59,7 @@ public class Employer
                                                        ApplicationManager applicationManager)
   {
     List<Job> jobPosts = viewPostsByMe(jobManager);
-    List<Jobseeker> applicantsForMyJobPosts = new ArrayList();
+    List<Jobseeker> applicantsForMyJobPosts = new ArrayList<Jobseeker>();
 
     for (Job job : jobPosts)
       applicantsForMyJobPosts.addAll(applicationManager.viewApplicantsOnDateForJob(date, job));

@@ -1,7 +1,6 @@
 package applications;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import jobs.Job;
@@ -24,7 +23,7 @@ public class ApplicationRepository
 
   public List<Application> viewApplicationsByJobseeker(Jobseeker jobseeker)
   {
-    List<Application> applicationsByJobseeker = new ArrayList();
+    List<Application> applicationsByJobseeker = new ArrayList<Application>();
     for (Application application : applications)
       addApplicationForJobseeker(jobseeker, application, applicationsByJobseeker);
 
@@ -42,7 +41,7 @@ public class ApplicationRepository
 
   public List<Application> viewApplicationsForJob(Job job)
   {
-    List<Application> applicationsForJob = new ArrayList();
+    List<Application> applicationsForJob = new ArrayList<Application>();
     for (Application application : applications)
       addApplicationForJob(job, application, applicationsForJob);
 

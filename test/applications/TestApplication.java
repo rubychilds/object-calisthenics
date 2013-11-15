@@ -17,6 +17,7 @@ public class TestApplication
   private Resume    resume;
   private Job       job;
   private Employer  employer;
+  private Application application;
 
   @Test(expected = NullPointerException.class)
   public void testWithNullJobseeker()
@@ -41,14 +42,12 @@ public class TestApplication
   @Test
   public void testApplicationIsByJobseeker()
   {
-    Application application = new Application(jobseeker, job);
     assertTrue(application.isApplicationByJobseeker(jobseeker));
   }
 
   @Test
   public void testApplicationIsNotByJobseeker()
   {
-    Application application = new Application(jobseeker, job);
     Jobseeker alternativeJobseeker = new Jobseeker("I'm another seeker");
     assertFalse(application.isApplicationByJobseeker(alternativeJobseeker));
   }
@@ -56,14 +55,12 @@ public class TestApplication
   @Test
   public void testApplicationIsForJob()
   {
-    Application application = new Application(jobseeker, job);
     assertTrue(application.isApplicationForJob(job));
   }
 
   @Test
   public void testApplicationIsNotForJob()
   {
-    Application application = new Application(jobseeker, job);
     Job alternativeJob = new ATS("I'm another job", employer);
     assertFalse(application.isApplicationForJob(alternativeJob));
   }
@@ -72,15 +69,12 @@ public class TestApplication
   public void testApplicationIsOnDate()
   {
     Date date = new Date();
-    Application application = new Application(jobseeker, job);
     assertTrue(application.isApplicationOnDate(date));
   }
 
   @Test
   public void testApplicationIsNotOnDate()
   {
-    Application application = new Application(jobseeker, job);
-
     Date date = new Date(2012, 11, 15);
     assertFalse(application.isApplicationOnDate(date));
   }
@@ -92,6 +86,7 @@ public class TestApplication
     this.employer = new Employer("Ruby employer");
     this.resume = new Resume("I'm a resume");
     this.job = new ATS("I'm a job", employer);
+    this.application = new Application(jobseeker, job);
   }
 
 }

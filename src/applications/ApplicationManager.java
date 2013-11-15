@@ -33,7 +33,7 @@ public class ApplicationManager
   {
 
     List<Application> applicationsForJob = applicationRepository.viewApplicationsForJob(job);
-    List<Jobseeker> applicantsForJob = new ArrayList();
+    List<Jobseeker> applicantsForJob = new ArrayList<Jobseeker>();
 
     for (Application application : applicationsForJob)
       applicantsForJob.add(application.applicant());
@@ -46,7 +46,7 @@ public class ApplicationManager
   {
     List<Application> applicationsForJob = applicationRepository.viewApplicationsForJob(job);
 
-    List<Jobseeker> applicantsOnDateForJob = new ArrayList();
+    List<Jobseeker> applicantsOnDateForJob = new ArrayList<Jobseeker>();
 
     for (Application application : applicationsForJob)
       addApplicantForJobIfApplicationOnDate(date, application, applicantsOnDateForJob);

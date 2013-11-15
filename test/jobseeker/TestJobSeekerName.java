@@ -9,13 +9,13 @@ public class TestJobSeekerName
   @Test(expected = NullPointerException.class)
   public void TestNullName()
   {
-    JobseekerName jobseekerName = new JobseekerName(null);
+     new JobseekerName(null);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void TestNoStringName()
   {
-    JobseekerName jobseekerName = new JobseekerName("");
+    new JobseekerName("");
   }
 
   @Test
