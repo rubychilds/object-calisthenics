@@ -1,35 +1,44 @@
 package resume;
 
-import java.util.HashMap;
+import java.util.Iterator;
 
 import jobseeker.Jobseeker;
 
 public class ResumeRepository
 {
-  private HashMap<Jobseeker, Resumes> resumeRepoForJobseekers;
+  private Resumes resumes;
 
   public ResumeRepository()
   {
-    this.resumeRepoForJobseekers = new HashMap<>();
+    this.resumes = new Resumes();
   }
 
-  public void addResume(Jobseeker jobseeker,
-                        Resume resume)
+  public void addResume(Resume resume)
   {
-    Resumes resumesForJobseeker = resumeRepoForJobseekers.get(jobseeker);
-
-    if (resumesForJobseeker == null)
-      resumesForJobseeker = new Resumes();
-
-    resumesForJobseeker.addResume(resume);
-
-    resumeRepoForJobseekers.put(jobseeker, resumesForJobseeker);
-
+    if(resume == null)
+      throw new NullPointerException();
+    if(!resumes.contains(resume))
+      resumes.add(resume); 
   }
 
   public Resumes resumesForJobseeker(Jobseeker jobseeker)
   {
-    return resumeRepoForJobseekers.get(jobseeker);
+    
+    Resumes resumesForJobseeker = new Resumes();
+    Iterator<Resume> iter = resumes.iterator();
+    while(iter.hasNext()){
+      Resume resume = iter.next();
+      addResumeIfForJobseer(jobseeker, resume, resumesForJobseeker);
+    
+    }       
+    return resumesForJobseeker;
   }
-
+  
+  public Resumes addResumeIfForJobseer(Jobseeker jobseeker, Resume resume, Resumes resumesForJobseeker)
+  {
+    if(resume.byJobseeker(jobseeker))
+      resumesForJobseeker.add(resume);
+    
+    return resumesForJobseeker;
+  }
 }

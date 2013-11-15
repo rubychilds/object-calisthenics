@@ -1,6 +1,5 @@
 package jobs;
 
-import java.util.List;
 
 import employer.Employer;
 

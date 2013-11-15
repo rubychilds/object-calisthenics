@@ -171,7 +171,7 @@ public class EmployerTest
 
   public void jobseekerResumeSetup()
   {
-    Resume resume = new Resume("I'm a resume");
+    Resume resume = new Resume("I'm a resume", jobseeker);
     this.activeResumeRepo = new ActiveResumeRepo();
     jobseeker.activateResume(resume, activeResumeRepo);
   }

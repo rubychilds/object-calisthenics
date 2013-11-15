@@ -1,6 +1,7 @@
 package resume;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Resumes
@@ -12,24 +13,32 @@ public class Resumes
     this.resumes = new ArrayList<>();
   }
 
-  public void addResume(Resume resume)
+  public void add(Resume resume)
   {
-    resumes.add(resume);
+    if (resume == null)
+      throw new NullPointerException();
+    if (!resumes.contains(resume))
+      resumes.add(resume);
   }
-  
+
   public int size()
   {
     return resumes.size();
   }
-  
+
   public boolean isEmpty()
   {
     return resumes.size() == 0;
   }
-  
+
   public boolean contains(Resume resume)
   {
     return resumes.contains(resume);
+  }
+  
+  public Iterator<Resume> iterator()
+  {
+    return resumes.iterator();
   }
 
 }

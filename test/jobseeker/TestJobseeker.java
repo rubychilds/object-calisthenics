@@ -77,7 +77,7 @@ public class TestJobseeker
 
     NAMED_JOBSEEKER.addResume(RESUME, resumeRepo);
 
-    verify(resumeRepo).addResume(NAMED_JOBSEEKER, RESUME);
+    verify(resumeRepo).addResume(RESUME);
   }
 
   @Test
@@ -170,7 +170,7 @@ public class TestJobseeker
 
     this.employer = new Employer("the Ladders");
     this.job = new JReq("dogWalker", this.employer);
-    this.RESUME = new Resume("this is a resume");
+    this.RESUME = new Resume("this is a resume", NAMED_JOBSEEKER);
   }
 
 }

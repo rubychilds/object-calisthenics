@@ -38,7 +38,7 @@ public class Jobseeker
   public void addResume(Resume resume,
                         ResumeRepository resumeRepository)
   {
-    resumeRepository.addResume(this, resume);
+    resumeRepository.addResume(resume);
   }
 
   public void activateResume(Resume resume,

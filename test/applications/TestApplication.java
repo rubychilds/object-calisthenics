@@ -84,7 +84,7 @@ public class TestApplication
   {
     this.jobseeker = new Jobseeker("Ruby seeker");
     this.employer = new Employer("Ruby employer");
-    this.resume = new Resume("I'm a resume");
+    this.resume = new Resume("I'm a resume", jobseeker);
     this.job = new ATS("I'm a job", employer);
     this.application = new Application(jobseeker, job);
   }
