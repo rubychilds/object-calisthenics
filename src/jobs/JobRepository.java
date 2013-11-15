@@ -1,32 +1,34 @@
 package jobs;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 import employer.Employer;
 
 public class JobRepository
 {
-  private List<Job> jobs;
+  private Jobs jobs;
 
   public JobRepository()
   {
-    this.jobs = new ArrayList<Job>();
+    this.jobs = new Jobs();
   }
 
-  public List<Job> jobsByEmployer(Employer employer)
+  public Jobs jobsByEmployer(Employer employer)
   {
-    List<Job> jobsByEmployer = new ArrayList<Job>();
+    Jobs jobsByEmployer = new Jobs();
 
-    for (Job job : jobs)
+    Iterator<Job> iter = jobs.iterator();
+    while (iter.hasNext())
+    {
+      Job job = iter.next();
       addJobIfByEmployer(job, employer, jobsByEmployer);
-
+    }
     return jobsByEmployer;
   }
-  
-  private List<Job> addJobIfByEmployer(Job job,
-                                       Employer employer,
-                                       List<Job> jobsBy)
+
+  private Jobs addJobIfByEmployer(Job job,
+                                  Employer employer,
+                                  Jobs jobsBy)
   {
     if (job.checkEmployerPostedJob(employer))
       jobsBy.add(job);

@@ -1,12 +1,14 @@
 package employer;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import applications.ApplicationManager;
 import applications.Date;
 import jobs.Job;
 import jobs.JobManager;
+import jobs.Jobs;
 import jobseeker.Jobseeker;
 
 public class Employer
@@ -24,7 +26,7 @@ public class Employer
     jobManager.postAJob(job);
   }
 
-  public List<Job> viewPostsByMe(JobManager jobManager)
+  public Jobs viewPostsByMe(JobManager jobManager)
   {
     return jobManager.viewPostsByARecruiter(this);
   }
@@ -45,11 +47,16 @@ public class Employer
   public List<Jobseeker> viewApplicantsForMyJobs(JobManager jobManager,
                                                  ApplicationManager applicationManager)
   {
-    List<Job> jobPosts = viewPostsByMe(jobManager);
+    Jobs jobPosts = viewPostsByMe(jobManager);
     List<Jobseeker> applicantsForMyJobPosts = new ArrayList();
 
-    for (Job job : jobPosts)
+    Iterator<Job> iter = jobPosts.iterator();
+
+    while (iter.hasNext())
+    {
+      Job job = iter.next();
       applicantsForMyJobPosts.addAll(applicationManager.viewApplicantsForJob(job));
+    }
 
     return applicantsForMyJobPosts;
   }
@@ -58,12 +65,16 @@ public class Employer
                                                        JobManager jobManager,
                                                        ApplicationManager applicationManager)
   {
-    List<Job> jobPosts = viewPostsByMe(jobManager);
+    Jobs jobPosts = viewPostsByMe(jobManager);
     List<Jobseeker> applicantsForMyJobPosts = new ArrayList<Jobseeker>();
 
-    for (Job job : jobPosts)
-      applicantsForMyJobPosts.addAll(applicationManager.viewApplicantsOnDateForJob(date, job));
+    Iterator<Job> iter = jobPosts.iterator();
 
+    while (iter.hasNext())
+    {
+      Job job = iter.next();
+      applicantsForMyJobPosts.addAll(applicationManager.viewApplicantsOnDateForJob(date, job));
+    }
     return applicantsForMyJobPosts;
   }
 

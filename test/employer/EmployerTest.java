@@ -2,12 +2,11 @@ package employer;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
-
 import jobs.ATS;
 import jobs.JReq;
 import jobs.Job;
 import jobs.JobManager;
+import jobs.Jobs;
 import jobseeker.Jobseeker;
 
 import org.junit.Before;
@@ -43,7 +42,7 @@ public class EmployerTest
     Job job = new JReq("animator", employer);
     employer.postJob(job, jobManager);
 
-    List<Job> jobs = employer.viewPostsByMe(jobManager);
+    Jobs jobs = employer.viewPostsByMe(jobManager);
 
     assertTrue(jobs.contains(job));
   }
@@ -54,7 +53,7 @@ public class EmployerTest
     Job job = new ATS("artist", employer);
     employer.postJob(job, jobManager);
 
-    List<Job> jobs = employer.viewPostsByMe(jobManager);
+    Jobs jobs = employer.viewPostsByMe(jobManager);
 
     assertTrue(jobs.contains(job));
   }

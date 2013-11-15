@@ -15,7 +15,7 @@ public class JobManager
     this.jobPoster = new JobPoster(jobRepository);
   }
 
-  public List<Job> viewPostsByARecruiter(Employer employer)
+  public Jobs viewPostsByARecruiter(Employer employer)
   {
     return jobRepository.jobsByEmployer(employer);
   }
