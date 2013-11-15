@@ -11,7 +11,6 @@ public class Applications
   public Applications()
   {
     this.applications = new ArrayList<Application>();
-
   }
 
   public void add(Application application)
@@ -21,15 +20,12 @@ public class Applications
 
   public Iterator<Application> iterator()
   {
-    Iterator<Application> iterator = applications.iterator();
-
-    return iterator;
+    return applications.iterator();
   }
 
   public boolean isEmpty()
   {
     return applications.isEmpty();
-
   }
 
   public boolean contains(Application application)
@@ -41,7 +37,7 @@ public class Applications
   {
     return applications.size();
   }
-  
+
   public Iterator<Application> applicationsIterator()
   {
     return new myIterator();
@@ -66,7 +62,6 @@ public class Applications
     {
       iter.remove();
     }
-
   }
 
 }
