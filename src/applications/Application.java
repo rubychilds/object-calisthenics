@@ -1,7 +1,5 @@
 package applications;
 
-import java.util.Date;
-
 import resume.Resume;
 import jobs.Job;
 import jobseeker.Jobseeker;
@@ -46,7 +44,7 @@ public class Application
 
   public boolean isApplicationOnDate(Date date)
   {
-    return this.date == date;
+    return this.date.isEqual(date);
   }
 
   public Jobseeker applicant()

@@ -1,10 +1,10 @@
 package employer;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import applications.ApplicationManager;
+import applications.Date;
 import jobs.Job;
 import jobs.JobManager;
 import jobseeker.Jobseeker;

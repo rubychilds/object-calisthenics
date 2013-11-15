@@ -2,14 +2,12 @@ package employer;
 
 import static org.junit.Assert.*;
 
-import java.util.Date;
 import java.util.List;
 
 import jobs.ATS;
 import jobs.JReq;
 import jobs.Job;
 import jobs.JobManager;
-import jobs.Jobs;
 import jobseeker.Jobseeker;
 
 import org.junit.Before;
@@ -17,21 +15,20 @@ import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 
 import resume.ActiveResumeRepo;
-import applications.Application;
+import resume.Resume;
 import applications.ApplicationManager;
-import applications.ApplicationRepository;
+import applications.Date;
 import employer.Employer;
 
 public class EmployerTest
 {
-  private JobManager            jobManager;
-  private Employer              employer;
-  private Jobseeker             jobseeker;
-  private Application           application;
-  private ActiveResumeRepo      activeResumeRepo;
-  private ApplicationRepository applicationRepo;
-  private Date                  date;
-  private ApplicationManager    applicationManager;
+  private JobManager         jobManager;
+  private Employer           employer;
+  private Jobseeker          jobseeker;
+  private ActiveResumeRepo   activeResumeRepo;
+  private Date               date;
+  private ApplicationManager applicationManager;
+  private Job                job;
 
   @Test
   public void testPost()
@@ -88,6 +85,98 @@ public class EmployerTest
     assertTrue(employer.viewApplicantsOnDateForMyJobs(date, jobManager, applicationManager).isEmpty());
   }
 
+  @Test
+  public void testICanViewNoApplicantsAfterPosintgAJobWithNoApplications()
+  {
+    employerPostsJob();
+    assertTrue(employer.viewApplicantsForJob(job, applicationManager).isEmpty());
+  }
+
+  @Test
+  public void testICanViewNoApplicantsAfterPosintgAJobWithNoApplicationsOnGivenDate()
+  {
+    employerPostsJob();
+    assertTrue(employer.viewApplicantsOnDateForJob(date, job, applicationManager).isEmpty());
+  }
+
+  @Test
+  public void testICanViewNoApplicantsAfterPosintgAJobWithNoApplicationsForMyPostings()
+  {
+    employerPostsJob();
+    assertTrue(employer.viewApplicantsForMyJobs(jobManager, applicationManager).isEmpty());
+  }
+
+  @Test
+  public void testICanViewNoApplicantsAfterPosintgAJobWithNoApplicationsForMyPostingsOnGivenDate()
+  {
+    employerPostsJob();
+    assertTrue(employer.viewApplicantsOnDateForMyJobs(date, jobManager, applicationManager).isEmpty());
+  }
+
+  @Test
+  public void testICanViewApplicantToAJob()
+  {
+    employerPostsJob();
+    jobseekerAppliesForJob();
+    assertTrue(employer.viewApplicantsForJob(job, applicationManager).contains(jobseeker));
+  }
+
+  @Test
+  public void testICanViewApplicantOnDateToJob()
+  {
+    jobseekerAppliesForJob();
+    assertTrue(employer.viewApplicantsOnDateForJob(date, job, applicationManager).contains(jobseeker));
+  }
+
+  @Test
+  public void testICanViewApplicantToMyJobs()
+  {
+    jobseekerAppliesForJob();
+    assertTrue(employer.viewApplicantsForJob(job, applicationManager).contains(jobseeker));
+
+    // add another job to the Job repo
+    Employer alternativeEmployer = new Employer("another employer");
+    Job jobByDifferentEmployer = new ATS("another job", alternativeEmployer);
+    alternativeEmployer.postJob(jobByDifferentEmployer, jobManager);
+
+    // jobseeker applies for new job by different employer
+    Jobseeker jobseeker2 = new Jobseeker("alternative Jobseeker");
+    jobseeker2.applyForJob(jobByDifferentEmployer, applicationManager);
+
+    // this jobseeker did not apply to employers job - should not be present
+    assertTrue(!employer.viewApplicantsForJob(job, applicationManager).contains(jobseeker2));
+  }
+
+  @Test
+  public void testICanViewApplicantToMyJobsOnDate()
+  {
+    jobseekerAppliesForJob();
+    assertTrue(employer.viewApplicantsOnDateForJob(date, job, applicationManager).contains(jobseeker));
+  }
+
+  public void employerPostsJob()
+  {
+    this.job = new ATS("artist", employer);
+    this.jobManager = new JobManager();
+    employer.postJob(job, jobManager);
+  }
+
+  public void jobseekerAppliesForJob()
+  {
+    employerPostsJob();
+    jobseekerResumeSetup();
+    this.applicationManager = new ApplicationManager(activeResumeRepo);
+    jobseeker.applyForJob(job, applicationManager);
+    this.date = new Date();
+  }
+
+  public void jobseekerResumeSetup()
+  {
+    Resume resume = new Resume("I'm a resume");
+    this.activeResumeRepo = new ActiveResumeRepo();
+    jobseeker.activateResume(resume, activeResumeRepo);
+  }
+
   @Before
   public void setUp()
   {
@@ -101,7 +190,6 @@ public class EmployerTest
     this.jobseeker = new Jobseeker("jobseekerMe");
 
     this.activeResumeRepo = new ActiveResumeRepo();
-    this.applicationRepo = new ApplicationRepository();
     this.applicationManager = new ApplicationManager(activeResumeRepo);
   }
 
