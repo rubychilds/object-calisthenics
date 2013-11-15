@@ -18,7 +18,8 @@ public class ApplicationRepository
   public void addApplication(Jobseeker jobseeker,
                              Application application)
   {
-    applications.add(application);
+    if (!applications.contains(application))
+      applications.add(application);
   }
 
   public List<Application> viewApplicationsByJobseeker(Jobseeker jobseeker)
@@ -31,8 +32,8 @@ public class ApplicationRepository
   }
 
   private List<Application> addApplicationForJobseeker(Jobseeker jobseeker,
-                                                      Application application,
-                                                      List<Application> applicationsByJobseeker)
+                                                       Application application,
+                                                       List<Application> applicationsByJobseeker)
   {
     if (application.isApplicationByJobseeker(jobseeker))
       applicationsByJobseeker.add(application);
@@ -56,6 +57,11 @@ public class ApplicationRepository
       applicationsForJob.add(application);
 
     return applicationsForJob;
+  }
+
+  public boolean isEmpty()
+  {
+    return applications.isEmpty();
   }
 
 }
