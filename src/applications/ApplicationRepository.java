@@ -39,7 +39,7 @@ public class ApplicationRepository
   {
     if (application.isApplicationByJobseeker(jobseeker))
       applicationsByJobseeker.add(application);
-    
+
     return applicationsByJobseeker;
   }
 

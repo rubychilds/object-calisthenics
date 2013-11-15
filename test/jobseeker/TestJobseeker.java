@@ -1,7 +1,5 @@
 package jobseeker;
 
-import java.util.List;
-
 import jobs.ATS;
 import jobs.JReq;
 import jobs.Job;
@@ -17,18 +15,19 @@ import resume.Resume;
 import resume.ResumeRepository;
 import applications.Application;
 import applications.ApplicationManager;
+import applications.Applications;
 import employer.Employer;
 
 public class TestJobseeker
 {
 
-  private Jobseeker             NAMED_JOBSEEKER;
-  private String                NAME_OF_JOBSEEKER;
-  private Resume                RESUME;
-  private Employer              employer;
-  private Job                   job;
+  private Jobseeker          NAMED_JOBSEEKER;
+  private String             NAME_OF_JOBSEEKER;
+  private Resume             RESUME;
+  private Employer           employer;
+  private Job                job;
 
-  private ActiveResumeRepo      activeResumeRepo;
+  private ActiveResumeRepo   activeResumeRepo;
   private ApplicationManager applicationManager;
 
   @Test(expected = NullPointerException.class)
@@ -121,7 +120,7 @@ public class TestJobseeker
 
     Application application = NAMED_JOBSEEKER.applyForJob(job, applicationManager);
 
-    List<Application> applications = NAMED_JOBSEEKER.viewApplications(applicationManager);
+    Applications applications = NAMED_JOBSEEKER.viewApplications(applicationManager);
 
     assertTrue(applications.contains(application));
   }
@@ -137,7 +136,7 @@ public class TestJobseeker
 
     Application application = NAMED_JOBSEEKER.applyForJob(job, applicationManager);
 
-    List<Application> applications = NAMED_JOBSEEKER.viewApplications(applicationManager);
+    Applications applications = NAMED_JOBSEEKER.viewApplications(applicationManager);
 
     assertTrue(applications.contains(application));
   }
@@ -151,7 +150,7 @@ public class TestJobseeker
 
     Application application = NAMED_JOBSEEKER.applyForJob(job, applicationManager);
 
-    List<Application> applications = NAMED_JOBSEEKER.viewApplications(applicationManager);
+    Applications applications = NAMED_JOBSEEKER.viewApplications(applicationManager);
 
     assertTrue(applications.isEmpty());
     assertTrue(!applications.contains(application));
