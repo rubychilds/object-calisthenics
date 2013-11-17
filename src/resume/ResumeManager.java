@@ -1,6 +1,5 @@
 package resume;
 
-import applications.Applications;
 import jobseeker.Jobseeker;
 
 public class ResumeManager
@@ -28,7 +27,9 @@ public class ResumeManager
   }
   
   public void addResume(Resume resume){
-    
+
+      activeResumeRepository.activateResume(resume);
+      resumeRepository.addResume(resume);
   }
 
   public Resumes resumesForJobseeker(Jobseeker jobseeker)

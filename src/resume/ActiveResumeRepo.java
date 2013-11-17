@@ -1,6 +1,5 @@
 package resume;
 
-import java.util.HashMap;
 import java.util.Iterator;
 
 import jobseeker.Jobseeker;
@@ -18,23 +17,29 @@ public class ActiveResumeRepo
   public void activateResume(Resume resume)
   {
     Iterator<Resume> iter = activeResumes.iterator();
-
+    boolean resumeExists = false;
     while (iter.hasNext())
     {
       Resume currentResume = iter.next();
-      checkIfResumeExistsForJobseekerAndReplace(resume, currentResume);
+      resumeExists = checkIfResumeExistsForJobseekerAndReplace(resume, currentResume);
     }
+
+    if (resumeExists == false)
+      activeResumes.add(resume);
+
   }
 
-  private void checkIfResumeExistsForJobseekerAndReplace(Resume resume,
-                                                         Resume currentResume)
+  private boolean checkIfResumeExistsForJobseekerAndReplace(Resume resume,
+                                                            Resume currentResume)
   {
     Jobseeker jobseekerResumeBelongsTo = resume.belongsTo();
     if (currentResume.isByJobseeker(jobseekerResumeBelongsTo))
     {
       activeResumes.remove(currentResume);
       activeResumes.add(resume);
+      return true;
     }
+    return false;
   }
 
   public Resume viewActiveResume(Jobseeker jobseeker)
