@@ -7,10 +7,12 @@ import jobseeker.Jobseeker;
 public class ResumeRepository
 {
   private Resumes resumes;
+  private ActiveResumeRepo activeResumeRepo;
 
   public ResumeRepository()
   {
     this.resumes = new Resumes();
+    this.activeResumeRepo =  new ActiveResumeRepo();
   }
 
   public void addResume(Resume resume)
@@ -36,9 +38,14 @@ public class ResumeRepository
   
   public Resumes addResumeIfForJobseer(Jobseeker jobseeker, Resume resume, Resumes resumesForJobseeker)
   {
-    if(resume.byJobseeker(jobseeker))
+    if(resume.isByJobseeker(jobseeker))
       resumesForJobseeker.add(resume);
     
     return resumesForJobseeker;
+  }
+
+  public Resume viewActiveResume(Jobseeker jobseeker)
+  {
+    return activeResumeRepo.viewActiveResume(jobseeker);
   }
 }

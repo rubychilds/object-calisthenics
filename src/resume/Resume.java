@@ -24,9 +24,14 @@ public class Resume {
     return resume;
   }
   
-  public boolean byJobseeker(Jobseeker jobseeker)
+  public Jobseeker belongsTo()
   {
-    return this.jobseeker == jobseeker;
+    return jobseeker;
+  }
+  
+  public boolean isByJobseeker(Jobseeker jobseeker)
+  {
+    return jobseeker.isJobseeker(this.jobseeker);
   }
   
 }

@@ -54,7 +54,7 @@ public class TestApplications
 
     assertEquals(applications.size(), 4);
 
-    Iterator iterator = applications.iterator();
+    Iterator<Application> iterator = applications.iterator();
 
     assertTrue(iterator.hasNext());
     assertEquals(iterator.next(), application1);

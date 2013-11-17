@@ -36,6 +36,11 @@ public class Resumes
     return resumes.contains(resume);
   }
   
+  public void remove(Resume resume)
+  {
+    resumes.remove(resume);
+  }
+  
   public Iterator<Resume> iterator()
   {
     return resumes.iterator();

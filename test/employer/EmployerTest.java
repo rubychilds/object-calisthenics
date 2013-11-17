@@ -1,7 +1,6 @@
 package employer;
 
 import static org.junit.Assert.*;
-
 import jobs.ATS;
 import jobs.JReq;
 import jobs.Job;
@@ -13,8 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 
-import resume.ActiveResumeRepo;
 import resume.Resume;
+import resume.ResumeManager;
 import applications.ApplicationManager;
 import applications.Date;
 import employer.Employer;
@@ -24,7 +23,7 @@ public class EmployerTest
   private JobManager         jobManager;
   private Employer           employer;
   private Jobseeker          jobseeker;
-  private ActiveResumeRepo   activeResumeRepo;
+  private ResumeManager      resumeManager;
   private Date               date;
   private ApplicationManager applicationManager;
   private Job                job;
@@ -164,7 +163,7 @@ public class EmployerTest
   {
     employerPostsJob();
     jobseekerResumeSetup();
-    this.applicationManager = new ApplicationManager(activeResumeRepo);
+    this.applicationManager = new ApplicationManager(resumeManager);
     jobseeker.applyForJob(job, applicationManager);
     this.date = new Date();
   }
@@ -172,8 +171,8 @@ public class EmployerTest
   public void jobseekerResumeSetup()
   {
     Resume resume = new Resume("I'm a resume", jobseeker);
-    this.activeResumeRepo = new ActiveResumeRepo();
-    jobseeker.activateResume(resume, activeResumeRepo);
+    this.resumeManager = new ResumeManager();
+    jobseeker.activateResume(resume, resumeManager);
   }
 
   @Before
@@ -188,8 +187,8 @@ public class EmployerTest
     this.employer = new Employer("Ruby");
     this.jobseeker = new Jobseeker("jobseekerMe");
 
-    this.activeResumeRepo = new ActiveResumeRepo();
-    this.applicationManager = new ApplicationManager(activeResumeRepo);
+    this.resumeManager = new ResumeManager();
+    this.applicationManager = new ApplicationManager(resumeManager);
   }
 
 }

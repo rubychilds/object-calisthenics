@@ -6,17 +6,17 @@ import java.util.List;
 
 import jobs.Job;
 import jobseeker.Jobseeker;
-import resume.ActiveResumeRepo;
+import resume.ResumeManager;
 
 public class ApplicationManager
 {
   private ApplicationProcess    applicationProcess;
   private ApplicationRepository applicationRepository;
 
-  public ApplicationManager(ActiveResumeRepo activeResRepo)
+  public ApplicationManager(ResumeManager resumeManager)
   {
     this.applicationRepository = new ApplicationRepository();
-    this.applicationProcess = new ApplicationProcess(activeResRepo, applicationRepository);
+    this.applicationProcess = new ApplicationProcess(resumeManager, applicationRepository);
   }
 
   public Application apply(Jobseeker jobseeker,
@@ -52,14 +52,14 @@ public class ApplicationManager
     Applications applicationsForJob = applicationRepository.viewApplicationsForJob(job);
 
     List<Jobseeker> applicantsOnDateForJob = new ArrayList<Jobseeker>();
-    
+
     Iterator<Application> iter = applicationsForJob.iterator();
     while (iter.hasNext())
     {
       Application application = iter.next();
       addApplicantForJobIfApplicationOnDate(date, application, applicantsOnDateForJob);
     }
-    
+
     return applicantsOnDateForJob;
   }
 

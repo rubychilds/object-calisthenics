@@ -1,7 +1,7 @@
 package applications;
 
-import resume.ActiveResumeRepo;
 import resume.Resume;
+import resume.ResumeManager;
 import jobs.Job;
 import jobseeker.Jobseeker;
 
@@ -9,13 +9,13 @@ public class ApplicationProcess
 {
 
   private ApplicationRepository applicationRepo;
-  private ActiveResumeRepo      activeResumeRepo;
+  private ResumeManager         resumeManager;
 
-  public ApplicationProcess(ActiveResumeRepo activeResumeRepo,
-                            ApplicationRepository applicationRepo)
+  public ApplicationProcess(ResumeManager resumeManager,
+                            ApplicationRepository applicationRepository)
   {
-    this.applicationRepo = applicationRepo;
-    this.activeResumeRepo = activeResumeRepo;
+    this.applicationRepo = applicationRepository;
+    this.resumeManager = resumeManager;
   }
 
   public Application apply(Jobseeker jobseeker,
@@ -42,7 +42,7 @@ public class ApplicationProcess
   private Application createApplicationWithResume(Jobseeker jobseeker,
                                                   Job job)
   {
-    Resume resume = activeResumeRepo.viewActiveResume(jobseeker);
+    Resume resume = resumeManager.viewActiveResume(jobseeker);
     if (resume == null)
       return null;
 

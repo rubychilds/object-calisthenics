@@ -1,9 +1,7 @@
 package jobseeker;
 
-
-import resume.ActiveResumeRepo;
 import resume.Resume;
-import resume.ResumeRepository;
+import resume.ResumeManager;
 import applications.ApplicationManager;
 import applications.Application;
 import applications.Applications;
@@ -36,20 +34,23 @@ public class Jobseeker
 
   // RESUME
   public void addResume(Resume resume,
-                        ResumeRepository resumeRepository)
+                        ResumeManager resumeManager)
   {
-    resumeRepository.addResume(resume);
+    resumeManager.addResume(resume);
   }
 
   public void activateResume(Resume resume,
-                             ActiveResumeRepo activeResumeRepo)
+                             ResumeManager resumeManager)
   {
-    activeResumeRepo.activateResume(this, resume);
+    if (resume.isByJobseeker(this))
+    {
+      resumeManager.activateResume(resume);
+    }
   }
 
-  public Resume viewActiveResume(ActiveResumeRepo activeResumeRepo)
+  public Resume viewActiveResume(ResumeManager resumeManager)
   {
-    return activeResumeRepo.viewActiveResume(this);
+    return resumeManager.viewActiveResume(this);
   }
 
   // APPLY
@@ -62,6 +63,11 @@ public class Jobseeker
   public Applications viewApplications(ApplicationManager applicationManager)
   {
     return applicationManager.viewApplicationsByJobseeker(this);
+  }
+
+  public boolean isJobseeker(Jobseeker jobseeker)
+  {
+    return this == jobseeker;
   }
 
   public String name()

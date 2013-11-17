@@ -10,9 +10,8 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import resume.ActiveResumeRepo;
 import resume.Resume;
-import resume.ResumeRepository;
+import resume.ResumeManager;
 import applications.Application;
 import applications.ApplicationManager;
 import applications.Applications;
@@ -27,7 +26,7 @@ public class TestJobseeker
   private Employer           employer;
   private Job                job;
 
-  private ActiveResumeRepo   activeResumeRepo;
+  private ResumeManager      resumeManager;
   private ApplicationManager applicationManager;
 
   @Test(expected = NullPointerException.class)
@@ -73,42 +72,42 @@ public class TestJobseeker
   @Test
   public void testJobseekerCanAddResume()
   {
-    ResumeRepository resumeRepo = spy(new ResumeRepository());
+    ResumeManager resumeManager = spy(new ResumeManager());
 
-    NAMED_JOBSEEKER.addResume(RESUME, resumeRepo);
+    NAMED_JOBSEEKER.addResume(RESUME, resumeManager);
 
-    verify(resumeRepo).addResume(RESUME);
+    verify(resumeManager).addResume(RESUME);
   }
 
   @Test
   public void testJobseekerCanActivateResume()
   {
-    ActiveResumeRepo resumeRepo = spy(new ActiveResumeRepo());
+    ResumeManager resumeManager = spy(new ResumeManager());
 
-    NAMED_JOBSEEKER.activateResume(RESUME, resumeRepo);
+    NAMED_JOBSEEKER.activateResume(RESUME, resumeManager);
 
-    verify(resumeRepo).activateResume(NAMED_JOBSEEKER, RESUME);
+    verify(resumeManager).activateResume(RESUME);
   }
 
   @Test
   public void testJobseekerCanViewActiveResume()
   {
-    ActiveResumeRepo resumeRepo = spy(new ActiveResumeRepo());
+    ResumeManager resumeManager = spy(new ResumeManager());
 
-    NAMED_JOBSEEKER.activateResume(RESUME, resumeRepo);
+    NAMED_JOBSEEKER.activateResume(RESUME, resumeManager);
 
-    assertTrue(NAMED_JOBSEEKER.viewActiveResume(resumeRepo) == RESUME);
+    assertTrue(NAMED_JOBSEEKER.viewActiveResume(resumeManager) == RESUME);
   }
 
   @Test
   public void testJobseekerCanViewAnAddedResume()
   {
-    ResumeRepository resumeRepo = new ResumeRepository();
+    ResumeManager resumeManager = spy(new ResumeManager());
 
-    NAMED_JOBSEEKER.addResume(RESUME, resumeRepo);
+    NAMED_JOBSEEKER.addResume(RESUME, resumeManager);
 
-    assertTrue(resumeRepo.resumesForJobseeker(NAMED_JOBSEEKER).size() == 1);
-    assertTrue(resumeRepo.resumesForJobseeker(NAMED_JOBSEEKER).contains(RESUME));
+    assertTrue(resumeManager.resumesForJobseeker(NAMED_JOBSEEKER).size() == 1);
+    assertTrue(resumeManager.resumesForJobseeker(NAMED_JOBSEEKER).contains(RESUME));
   }
 
   @Test
@@ -132,7 +131,7 @@ public class TestJobseeker
 
     this.job = new JReq("dogWalker", this.employer);
 
-    NAMED_JOBSEEKER.activateResume(RESUME, activeResumeRepo);
+    NAMED_JOBSEEKER.activateResume(RESUME, resumeManager);
 
     Application application = NAMED_JOBSEEKER.applyForJob(job, applicationManager);
 
@@ -158,8 +157,8 @@ public class TestJobseeker
 
   private void setupApplicationSystem()
   {
-    this.activeResumeRepo = new ActiveResumeRepo();
-    this.applicationManager = new ApplicationManager(activeResumeRepo);
+    this.resumeManager = new ResumeManager();
+    this.applicationManager = new ApplicationManager(resumeManager);
   }
 
   @Before
