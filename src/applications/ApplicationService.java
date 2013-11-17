@@ -1,19 +1,18 @@
 package applications;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import jobs.Job;
 import jobseeker.Jobseeker;
-import resume.ResumeManager;
+import jobseeker.Jobseekers;
+import resume.ResumeService;
 
-public class ApplicationManager
+public class ApplicationService
 {
   private ApplicationProcess    applicationProcess;
   private ApplicationRepository applicationRepository;
 
-  public ApplicationManager(ResumeManager resumeManager)
+  public ApplicationService(ResumeService resumeManager)
   {
     this.applicationRepository = new ApplicationRepository();
     this.applicationProcess = new ApplicationProcess(resumeManager, applicationRepository);
@@ -30,11 +29,11 @@ public class ApplicationManager
     return applicationRepository.viewApplicationsByJobseeker(jobseeker);
   }
 
-  public List<Jobseeker> viewApplicantsForJob(Job job)
+  public Jobseekers viewApplicantsForJob(Job job)
   {
 
     Applications applicationsForJob = applicationRepository.viewApplicationsForJob(job);
-    List<Jobseeker> applicantsForJob = new ArrayList<Jobseeker>();
+    Jobseekers applicantsForJob = new Jobseekers();
 
     Iterator<Application> iter = applicationsForJob.iterator();
     while (iter.hasNext())
@@ -46,12 +45,12 @@ public class ApplicationManager
     return applicantsForJob;
   }
 
-  public List<Jobseeker> viewApplicantsOnDateForJob(Date date,
-                                                    Job job)
+  public Jobseekers viewApplicantsOnDateForJob(Date date,
+                                               Job job)
   {
     Applications applicationsForJob = applicationRepository.viewApplicationsForJob(job);
 
-    List<Jobseeker> applicantsOnDateForJob = new ArrayList<Jobseeker>();
+    Jobseekers applicantsOnDateForJob = new Jobseekers();
 
     Iterator<Application> iter = applicationsForJob.iterator();
     while (iter.hasNext())
@@ -63,9 +62,9 @@ public class ApplicationManager
     return applicantsOnDateForJob;
   }
 
-  private List<Jobseeker> addApplicantForJobIfApplicationOnDate(Date date,
-                                                                Application application,
-                                                                List<Jobseeker> applicantsOnDateForJob)
+  private Jobseekers addApplicantForJobIfApplicationOnDate(Date date,
+                                                           Application application,
+                                                           Jobseekers applicantsOnDateForJob)
   {
     if (application.isApplicationOnDate(date))
       applicantsOnDateForJob.add(application.applicant());

@@ -2,14 +2,14 @@ package resume;
 
 import jobseeker.Jobseeker;
 
-public class ResumeManager
+public class ResumeService
 {
   
   private ActiveResumeRepo activeResumeRepository;
   private ResumeRepository resumeRepository;
 
 
-  public ResumeManager()
+  public ResumeService()
   {
     this.resumeRepository = new ResumeRepository();
     this.activeResumeRepository = new ActiveResumeRepo();

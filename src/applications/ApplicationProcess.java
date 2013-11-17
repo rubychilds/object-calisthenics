@@ -1,7 +1,7 @@
 package applications;
 
 import resume.Resume;
-import resume.ResumeManager;
+import resume.ResumeService;
 import jobs.Job;
 import jobseeker.Jobseeker;
 
@@ -9,9 +9,9 @@ public class ApplicationProcess
 {
 
   private ApplicationRepository applicationRepo;
-  private ResumeManager         resumeManager;
+  private ResumeService         resumeManager;
 
-  public ApplicationProcess(ResumeManager resumeManager,
+  public ApplicationProcess(ResumeService resumeManager,
                             ApplicationRepository applicationRepository)
   {
     this.applicationRepo = applicationRepository;

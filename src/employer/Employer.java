@@ -1,15 +1,13 @@
 package employer;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
-import applications.ApplicationManager;
+import applications.ApplicationService;
 import applications.Date;
 import jobs.Job;
 import jobs.JobManager;
 import jobs.Jobs;
-import jobseeker.Jobseeker;
+import jobseeker.Jobseekers;
 
 public class Employer
 {
@@ -31,24 +29,24 @@ public class Employer
     return jobManager.viewPostsByARecruiter(this);
   }
 
-  public List<Jobseeker> viewApplicantsForJob(Job job,
-                                              ApplicationManager applicationManager)
+  public Jobseekers viewApplicantsForJob(Job job,
+                                         ApplicationService applicationManager)
   {
     return applicationManager.viewApplicantsForJob(job);
   }
 
-  public List<Jobseeker> viewApplicantsOnDateForJob(Date date,
-                                                    Job job,
-                                                    ApplicationManager applicationManager)
+  public Jobseekers viewApplicantsOnDateForJob(Date date,
+                                               Job job,
+                                               ApplicationService applicationManager)
   {
     return applicationManager.viewApplicantsOnDateForJob(date, job);
   }
 
-  public List<Jobseeker> viewApplicantsForMyJobs(JobManager jobManager,
-                                                 ApplicationManager applicationManager)
+  public Jobseekers viewApplicantsForMyJobs(JobManager jobManager,
+                                            ApplicationService applicationManager)
   {
     Jobs jobPosts = viewPostsByMe(jobManager);
-    List<Jobseeker> applicantsForMyJobPosts = new ArrayList();
+    Jobseekers applicantsForMyJobPosts = new Jobseekers();
 
     Iterator<Job> iter = jobPosts.iterator();
 
@@ -61,12 +59,12 @@ public class Employer
     return applicantsForMyJobPosts;
   }
 
-  public List<Jobseeker> viewApplicantsOnDateForMyJobs(Date date,
-                                                       JobManager jobManager,
-                                                       ApplicationManager applicationManager)
+  public Jobseekers viewApplicantsOnDateForMyJobs(Date date,
+                                                  JobManager jobManager,
+                                                  ApplicationService applicationManager)
   {
     Jobs jobPosts = viewPostsByMe(jobManager);
-    List<Jobseeker> applicantsForMyJobPosts = new ArrayList<Jobseeker>();
+    Jobseekers applicantsForMyJobPosts = new Jobseekers();
 
     Iterator<Job> iter = jobPosts.iterator();
 

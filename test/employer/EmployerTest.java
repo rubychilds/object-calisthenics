@@ -13,8 +13,8 @@ import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 
 import resume.Resume;
-import resume.ResumeManager;
-import applications.ApplicationManager;
+import resume.ResumeService;
+import applications.ApplicationService;
 import applications.Date;
 import employer.Employer;
 
@@ -23,9 +23,9 @@ public class EmployerTest
   private JobManager         jobManager;
   private Employer           employer;
   private Jobseeker          jobseeker;
-  private ResumeManager      resumeManager;
+  private ResumeService      resumeManager;
   private Date               date;
-  private ApplicationManager applicationManager;
+  private ApplicationService applicationManager;
   private Job                job;
 
   @Test
@@ -163,7 +163,7 @@ public class EmployerTest
   {
     employerPostsJob();
     jobseekerResumeSetup();
-    this.applicationManager = new ApplicationManager(resumeManager);
+    this.applicationManager = new ApplicationService(resumeManager);
     jobseeker.applyForJob(job, applicationManager);
     this.date = new Date();
   }
@@ -171,7 +171,7 @@ public class EmployerTest
   public void jobseekerResumeSetup()
   {
     Resume resume = new Resume("I'm a resume", jobseeker);
-    this.resumeManager = new ResumeManager();
+    this.resumeManager = new ResumeService();
     jobseeker.activateResume(resume, resumeManager);
   }
 
@@ -187,8 +187,8 @@ public class EmployerTest
     this.employer = new Employer("Ruby");
     this.jobseeker = new Jobseeker("jobseekerMe");
 
-    this.resumeManager = new ResumeManager();
-    this.applicationManager = new ApplicationManager(resumeManager);
+    this.resumeManager = new ResumeService();
+    this.applicationManager = new ApplicationService(resumeManager);
   }
 
 }

@@ -11,9 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import resume.Resume;
-import resume.ResumeManager;
+import resume.ResumeService;
 import applications.Application;
-import applications.ApplicationManager;
+import applications.ApplicationService;
 import applications.Applications;
 import employer.Employer;
 
@@ -26,8 +26,8 @@ public class TestJobseeker
   private Employer           employer;
   private Job                job;
 
-  private ResumeManager      resumeManager;
-  private ApplicationManager applicationManager;
+  private ResumeService      resumeManager;
+  private ApplicationService applicationManager;
 
   @Test(expected = NullPointerException.class)
   public void testJobseekerWithNullName()
@@ -72,7 +72,7 @@ public class TestJobseeker
   @Test
   public void testJobseekerCanAddResume()
   {
-    ResumeManager resumeManager = spy(new ResumeManager());
+    ResumeService resumeManager = spy(new ResumeService());
 
     NAMED_JOBSEEKER.addResume(RESUME, resumeManager);
 
@@ -82,7 +82,7 @@ public class TestJobseeker
   @Test
   public void testJobseekerCanActivateResume()
   {
-    ResumeManager resumeManager = spy(new ResumeManager());
+    ResumeService resumeManager = spy(new ResumeService());
 
     NAMED_JOBSEEKER.activateResume(RESUME, resumeManager);
 
@@ -92,7 +92,7 @@ public class TestJobseeker
   @Test
   public void testJobseekerCanViewActiveResume()
   {
-    ResumeManager resumeManager = spy(new ResumeManager());
+    ResumeService resumeManager = spy(new ResumeService());
 
     NAMED_JOBSEEKER.activateResume(RESUME, resumeManager);
 
@@ -102,7 +102,7 @@ public class TestJobseeker
   @Test
   public void testJobseekerCanViewAnAddedResume()
   {
-    ResumeManager resumeManager = spy(new ResumeManager());
+    ResumeService resumeManager = spy(new ResumeService());
 
     NAMED_JOBSEEKER.addResume(RESUME, resumeManager);
 
@@ -157,8 +157,8 @@ public class TestJobseeker
 
   private void setupApplicationSystem()
   {
-    this.resumeManager = new ResumeManager();
-    this.applicationManager = new ApplicationManager(resumeManager);
+    this.resumeManager = new ResumeService();
+    this.applicationManager = new ApplicationService(resumeManager);
   }
 
   @Before

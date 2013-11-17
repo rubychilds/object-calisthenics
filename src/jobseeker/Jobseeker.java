@@ -1,8 +1,8 @@
 package jobseeker;
 
 import resume.Resume;
-import resume.ResumeManager;
-import applications.ApplicationManager;
+import resume.ResumeService;
+import applications.ApplicationService;
 import applications.Application;
 import applications.Applications;
 import jobs.Job;
@@ -34,35 +34,35 @@ public class Jobseeker
 
   // RESUME
   public void addResume(Resume resume,
-                        ResumeManager resumeManager)
+                        ResumeService resumeService)
   {
-    resumeManager.addResume(resume);
+    resumeService.addResume(resume);
   }
 
   public void activateResume(Resume resume,
-                             ResumeManager resumeManager)
+                             ResumeService resumeService)
   {
     if (resume.isByJobseeker(this))
     {
-      resumeManager.activateResume(resume);
+      resumeService.activateResume(resume);
     }
   }
 
-  public Resume viewActiveResume(ResumeManager resumeManager)
+  public Resume viewActiveResume(ResumeService resumeService)
   {
-    return resumeManager.viewActiveResume(this);
+    return resumeService.viewActiveResume(this);
   }
 
   // APPLY
   public Application applyForJob(Job job,
-                                 ApplicationManager applicationManager)
+                                 ApplicationService applicationService)
   {
-    return applicationManager.apply(this, job);
+    return applicationService.apply(this, job);
   }
 
-  public Applications viewApplications(ApplicationManager applicationManager)
+  public Applications viewApplications(ApplicationService applicationService)
   {
-    return applicationManager.viewApplicationsByJobseeker(this);
+    return applicationService.viewApplicationsByJobseeker(this);
   }
 
   public boolean isJobseeker(Jobseeker jobseeker)
